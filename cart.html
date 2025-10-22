@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Your Cart | E-Shop</title>
+  <link rel="stylesheet" href="/css/style.css" />
+</head>
+<body>
+  <nav class="navbar">
+    <h1>E-Shop</h1>
+    <div>
+      <a href="index.html">Home</a>
+      <a href="products.html">Products</a>
+    </div>
+  </nav>
+
+  <section class="product-section">
+    <h2>Your Shopping Cart 🛒</h2>
+    <div id="cart-items"></div>
+    <h3 id="total"></h3>
+  </section>
+
+  <script>
+    function loadCart() {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      const cartDiv = document.getElementById("cart-items");
+      const totalDiv = document.getElementById("total");
+
+      if (cart.length === 0) {
+        cartDiv.innerHTML = "<p>Your cart is empty.</p>";
+        totalDiv.textContent = "";
+        return;
+      }
+
+      let total = 0;
+      cartDiv.innerHTML = cart.map(item => {
+        total += item.price * item.qty;
+        return `<p>${item.name} - ₹${item.price} × ${item.qty}</p>`;
+      }).join("");
+
+      totalDiv.textContent = `Total: ₹${total}`;
+    }
+
+    document.addEventListener("DOMContentLoaded", loadCart);
+  </script>
+</body>
+</html>
